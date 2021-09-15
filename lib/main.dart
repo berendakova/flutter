@@ -40,7 +40,7 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  List<String> _items = ['first', 'second', 'third'];
+  List<String> _items = ['Чат'];
 
   TextEditingController _textEditingController = TextEditingController();
 
@@ -74,7 +74,7 @@ class _MyHomePageState extends State<MyHomePage> {
                       ),
                       onTap: () {
                         Navigator.of(context).push(MaterialPageRoute(
-                            builder: (context) => DetailInfo(title: item)));
+                            builder: (context) => Chat(title: item)));
                       },
                     );
                   }).toList(),
