@@ -11,6 +11,6 @@ abstract class RestClient {
  @GET('/chat')
  Future<List<Message>> getMessages();
 
- @POST("/chat")
+ @POST('/chat')
  Future<Message> sendMessage(@Body() Message message);
 }

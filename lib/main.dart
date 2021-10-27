@@ -1,9 +1,14 @@
+import 'dart:io';
+
+import 'package:first_project/api.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:first_project/detail_info.dart';
 
 void main() {
+  HttpOverrides.global = MyHttpOverrides();
+
   runApp(const MyApp());
 }
 
@@ -17,6 +22,13 @@ class MyApp extends StatelessWidget {
           title: 'Flutter Demo',
           home: const MyHomePage(title: 'Homeworks'));
     });
+  }
+}
+class MyHttpOverrides extends HttpOverrides{
+  @override
+  HttpClient createHttpClient(SecurityContext? context){
+    return super.createHttpClient(context)
+      ..badCertificateCallback = (X509Certificate cert, String host, int port)=> true;
   }
 }
 
@@ -47,7 +59,7 @@ class _MyHomePageState extends State<MyHomePage> {
                       children: ListTile.divideTiles(context: context, tiles: [
                         ListTile(
                           title: const Text(
-                            'HW1. Widgets',
+                            'Task 1',
                           ),
                           onTap: () {
                             Navigator.of(context).push(MaterialPageRoute(
@@ -56,11 +68,11 @@ class _MyHomePageState extends State<MyHomePage> {
                         ),
                         ListTile(
                           title: const Text(
-                            'HW2. API',
+                            'Task 2',
                           ),
                           onTap: () {
                             Navigator.of(context).push(MaterialPageRoute(
-                                builder: (context) => Chat(title: 'task 1')));
+                                builder: (context) => ApiPage(title: 'task 1')));
                           },
                         ),
                       ]).toList(),

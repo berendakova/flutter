@@ -7,12 +7,10 @@ part 'Message.g.dart';
 @JsonSerializable()
 class Message {
   Message({
-    required this.id,
     required this.author,
     required this.message,
   });
 
-  String id;
   String author;
   String message;
 
