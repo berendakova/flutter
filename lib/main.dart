@@ -1,10 +1,10 @@
 import 'dart:io';
 
-import 'package:first_project/api.dart';
+import 'package:first_project/task2/api.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:first_project/detail_info.dart';
+import 'package:first_project/task1/detail_info.dart';
 
 void main() {
   HttpOverrides.global = MyHttpOverrides();
