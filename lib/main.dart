@@ -1,32 +1,34 @@
-import 'package:first_project/detail_info.dart';
+import 'dart:io';
+
+import 'package:first_project/task2/api.dart';
+import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:first_project/task1/detail_info.dart';
 
 void main() {
+  HttpOverrides.global = MyHttpOverrides();
+
   runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);
 
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Flutter Demo',
-      theme: ThemeData(
-        // This is the theme of your application.
-        //
-        // Try running your application with "flutter run". You'll see the
-        // application has a blue toolbar. Then, without quitting the app, try
-        // changing the primarySwatch below to Colors.green and then invoke
-        // "hot reload" (press "r" in the console where you ran "flutter run",
-        // or simply save your changes to "hot reload" in a Flutter IDE).
-        // Notice that the counter didn't reset back to zero; the application
-        // is not restarted.
-        primarySwatch: Colors.blue,
-      ),
-      home: const MyHomePage(title: 'Flutter Demo Home Page'),
-    );
+    return Observer(builder: (context) {
+      return MaterialApp(
+          title: 'Flutter Demo',
+          home: const MyHomePage(title: 'Homeworks'));
+    });
+  }
+}
+class MyHttpOverrides extends HttpOverrides{
+  @override
+  HttpClient createHttpClient(SecurityContext? context){
+    return super.createHttpClient(context)
+      ..badCertificateCallback = (X509Certificate cert, String host, int port)=> true;
   }
 }
 
@@ -40,17 +42,6 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  List<String> _items = ['Чат'];
-
-  TextEditingController _textEditingController = TextEditingController();
-
-  void _addToList(String text) {
-    setState(() {
-      _items.add(text);
-    });
-    _textEditingController.clear();
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -60,44 +51,36 @@ class _MyHomePageState extends State<MyHomePage> {
       body: SafeArea(
         child: Center(
             child: Padding(
-          padding: const EdgeInsets.all(16.0),
-          child: Column(
-            children: [
-              Expanded(
-                child: ListView(
-                  children: _items.map((item) {
-                    return ListTile(
-                      title: Text(
-                        item,
-                        style: const TextStyle(
-                            color: Colors.deepOrange, fontSize: 16),
-                      ),
-                      onTap: () {
-                        Navigator.of(context).push(MaterialPageRoute(
-                            builder: (context) => Chat(title: item)));
-                      },
-                    );
-                  }).toList(),
-                ),
-              ),
-              Row(
+              padding: const EdgeInsets.all(16.0),
+              child: Column(
                 children: [
                   Expanded(
-                    child: TextField(
-                      controller: _textEditingController,
+                    child: ListView(
+                      children: ListTile.divideTiles(context: context, tiles: [
+                        ListTile(
+                          title: const Text(
+                            'Task 1',
+                          ),
+                          onTap: () {
+                            Navigator.of(context).push(MaterialPageRoute(
+                                builder: (context) => Chat(title: 'task 1')));
+                          },
+                        ),
+                        ListTile(
+                          title: const Text(
+                            'Task 2',
+                          ),
+                          onTap: () {
+                            Navigator.of(context).push(MaterialPageRoute(
+                                builder: (context) => ApiPage(title: 'task 1')));
+                          },
+                        ),
+                      ]).toList(),
                     ),
                   ),
-                  GestureDetector(
-                    child: Icon(Icons.add),
-                    onTap: () {
-                      _addToList(_textEditingController.text);
-                    },
-                  )
                 ],
-              )
-            ],
-          ),
-        )),
+              ),
+            )),
       ),
     );
   }
