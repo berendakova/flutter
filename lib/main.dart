@@ -5,6 +5,7 @@ import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:first_project/task1/detail_info.dart';
+import 'package:first_project/task3/gallery.dart';
 
 void main() {
   HttpOverrides.global = MyHttpOverrides();
@@ -72,7 +73,16 @@ class _MyHomePageState extends State<MyHomePage> {
                           ),
                           onTap: () {
                             Navigator.of(context).push(MaterialPageRoute(
-                                builder: (context) => ApiPage(title: 'task 1')));
+                                builder: (context) => ApiPage(title: 'task 2')));
+                          },
+                        ),
+                        ListTile(
+                          title: const Text(
+                            'Task 3',
+                          ),
+                          onTap: () {
+                            Navigator.of(context).push(MaterialPageRoute(
+                                builder: (context) => Gallery(title: 'task 3')));
                           },
                         ),
                       ]).toList(),
